@@ -14,6 +14,7 @@ using System.Data.EntityClient;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
+using System.Linq;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -187,6 +188,16 @@ namespace RS_Kata
     [DataContractAttribute(IsReference=true)]
     public partial class Cart : EntityObject
     {
+		public void UpdateCartTotal()
+		{
+			TotalCost = 0.00;
+
+			foreach(CartItem cartItem in CartItems)
+			{
+				TotalCost += cartItem.GetExtendedPrice();
+			}
+		}
+
         #region Factory Method
     
         /// <summary>
@@ -293,6 +304,24 @@ namespace RS_Kata
     [DataContractAttribute(IsReference=true)]
     public partial class CartItem : EntityObject
     {
+
+		public double GetExtendedPrice()
+		{
+			if (Item.Discounts.Count > 0)
+			{
+				Discount discount = Item.Discounts.FirstOrDefault();
+				if (ItemQty >= discount.QtyRequired)
+				{
+					int discountQty = ItemQty / discount.QtyRequired;
+					int nonDiscountQty = ItemQty % discount.QtyRequired;
+					return (discountQty * discount.DiscountedPrice) + (nonDiscountQty * Item.Price);
+				}
+			}
+
+			return ItemQty*Item.Price;
+
+		}
+
         #region Factory Method
     
         /// <summary>

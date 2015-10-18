@@ -39,7 +39,8 @@ namespace RS_Kata.Controllers
 							ItemQty = 1
 						});
 				}
-
+				
+				cart.UpdateCartTotal();
 			}
 
 			return RedirectToAction("Index");
