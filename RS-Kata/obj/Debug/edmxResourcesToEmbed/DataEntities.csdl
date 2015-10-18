@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataEntities" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+  <EntityContainer Name="DataEntitiesContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Carts" EntityType="DataEntities.Cart" />
+    <EntitySet Name="Items" EntityType="DataEntities.Item" />
+    <EntitySet Name="Discounts" EntityType="DataEntities.Discount" />
+    <EntitySet Name="CartItems" EntityType="DataEntities.CartItem" />
+    <AssociationSet Name="CartCartItem" Association="DataEntities.CartCartItem">
+      <End Role="Cart" EntitySet="Carts" />
+      <End Role="CartItem" EntitySet="CartItems" />
+    </AssociationSet>
+    <AssociationSet Name="CartItemItem" Association="DataEntities.CartItemItem">
+      <End Role="CartItem" EntitySet="CartItems" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="ItemDiscount" Association="DataEntities.ItemDiscount">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="Discount" EntitySet="Discounts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Double" Name="TotalCost" Nullable="false" />
+    <NavigationProperty Name="CartItems" Relationship="DataEntities.CartCartItem" FromRole="Cart" ToRole="CartItem" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="String" Name="SKU" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Double" Name="Price" Nullable="false" />
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="CartItem" Relationship="DataEntities.CartItemItem" FromRole="Item" ToRole="CartItem" />
+    <NavigationProperty Name="Discounts" Relationship="DataEntities.ItemDiscount" FromRole="Item" ToRole="Discount" />
+  </EntityType>
+  <EntityType Name="Discount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="QtyRequired" Nullable="false" />
+    <Property Type="Double" Name="DiscountedPrice" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="DataEntities.ItemDiscount" FromRole="Discount" ToRole="Item" />
+    <Property Type="Int32" Name="ItemId" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CartItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Cart" Relationship="DataEntities.CartCartItem" FromRole="CartItem" ToRole="Cart" />
+    <Property Type="Int32" Name="CartId" Nullable="false" />
+    <Property Type="Int32" Name="ItemQty" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="DataEntities.CartItemItem" FromRole="CartItem" ToRole="Item" />
+  </EntityType>
+  <Association Name="CartCartItem">
+    <End Type="DataEntities.Cart" Role="Cart" Multiplicity="1" />
+    <End Type="DataEntities.CartItem" Role="CartItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cart">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartItem">
+        <PropertyRef Name="CartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartItemItem">
+    <End Type="DataEntities.CartItem" Role="CartItem" Multiplicity="1" />
+    <End Type="DataEntities.Item" Role="Item" Multiplicity="1" />
+  </Association>
+  <Association Name="ItemDiscount">
+    <End Type="DataEntities.Item" Role="Item" Multiplicity="1" />
+    <End Type="DataEntities.Discount" Role="Discount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Discount">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

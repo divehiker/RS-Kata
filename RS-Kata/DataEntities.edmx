@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DataEntities.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="DataEntitiesStoreContainer">
+    <EntitySet Name="Carts" EntityType="DataEntities.Store.Carts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Items" EntityType="DataEntities.Store.Items" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Discounts" EntityType="DataEntities.Store.Discounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CartItems" EntityType="DataEntities.Store.CartItems" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CartCartItem" Association="DataEntities.Store.CartCartItem">
+      <End Role="Cart" EntitySet="Carts" />
+      <End Role="CartItem" EntitySet="CartItems" />
+    </AssociationSet>
+    <AssociationSet Name="CartItemItem" Association="DataEntities.Store.CartItemItem">
+      <End Role="CartItem" EntitySet="CartItems" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="ItemDiscount" Association="DataEntities.Store.ItemDiscount">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="Discount" EntitySet="Discounts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Carts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TotalCost" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="SKU" Type="nvarchar(max)" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="float" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Discounts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QtyRequired" Type="int" Nullable="false" />
+    <Property Name="DiscountedPrice" Type="float" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CartItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CartId" Type="int" Nullable="false" />
+    <Property Name="ItemQty" Type="int" Nullable="false" />
+    <Property Name="Item_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CartCartItem">
+    <End Role="Cart" Type="DataEntities.Store.Carts" Multiplicity="1" />
+    <End Role="CartItem" Type="DataEntities.Store.CartItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cart">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartItem">
+        <PropertyRef Name="CartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartItemItem">
+    <End Role="CartItem" Type="DataEntities.Store.CartItems" Multiplicity="*" />
+    <End Role="Item" Type="DataEntities.Store.Items" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartItem">
+        <PropertyRef Name="Item_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ItemDiscount">
+    <End Role="Item" Type="DataEntities.Store.Items" Multiplicity="1" />
+    <End Role="Discount" Type="DataEntities.Store.Discounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Discount">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataEntities" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="DataEntitiesContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Carts" EntityType="DataEntities.Cart" />
+          <EntitySet Name="Items" EntityType="DataEntities.Item" />
+          <EntitySet Name="Discounts" EntityType="DataEntities.Discount" />
+          <EntitySet Name="CartItems" EntityType="DataEntities.CartItem" />
+          <AssociationSet Name="CartCartItem" Association="DataEntities.CartCartItem">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="CartItem" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="CartItemItem" Association="DataEntities.CartItemItem">
+            <End Role="CartItem" EntitySet="CartItems" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="ItemDiscount" Association="DataEntities.ItemDiscount">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Discount" EntitySet="Discounts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Double" Name="TotalCost" Nullable="false" />
+          <NavigationProperty Name="CartItems" Relationship="DataEntities.CartCartItem" FromRole="Cart" ToRole="CartItem" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="String" Name="SKU" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Double" Name="Price" Nullable="false" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="CartItem" Relationship="DataEntities.CartItemItem" FromRole="Item" ToRole="CartItem" />
+          <NavigationProperty Name="Discounts" Relationship="DataEntities.ItemDiscount" FromRole="Item" ToRole="Discount" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="QtyRequired" Nullable="false" />
+          <Property Type="Double" Name="DiscountedPrice" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="DataEntities.ItemDiscount" FromRole="Discount" ToRole="Item" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Cart" Relationship="DataEntities.CartCartItem" FromRole="CartItem" ToRole="Cart" />
+          <Property Type="Int32" Name="CartId" Nullable="false" />
+          <Property Type="Int32" Name="ItemQty" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="DataEntities.CartItemItem" FromRole="CartItem" ToRole="Item" />
+        </EntityType>
+        <Association Name="CartCartItem">
+          <End Type="DataEntities.Cart" Role="Cart" Multiplicity="1" />
+          <End Type="DataEntities.CartItem" Role="CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CartItemItem">
+          <End Type="DataEntities.CartItem" Role="CartItem" Multiplicity="1" />
+          <End Type="DataEntities.Item" Role="Item" Multiplicity="1" />
+        </Association>
+        <Association Name="ItemDiscount">
+          <End Type="DataEntities.Item" Role="Item" Multiplicity="1" />
+          <End Type="DataEntities.Discount" Role="Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataEntitiesStoreContainer" CdmEntityContainer="DataEntitiesContainer">
+    <EntitySetMapping Name="Carts">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEntities.Cart)">
+        <MappingFragment StoreEntitySet="Carts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEntities.Item)">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SKU" ColumnName="SKU" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Discounts">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEntities.Discount)">
+        <MappingFragment StoreEntitySet="Discounts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="QtyRequired" ColumnName="QtyRequired" />
+          <ScalarProperty Name="DiscountedPrice" ColumnName="DiscountedPrice" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartItems">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEntities.CartItem)">
+        <MappingFragment StoreEntitySet="CartItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartId" ColumnName="CartId" />
+          <ScalarProperty Name="ItemQty" ColumnName="ItemQty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CartItemItem" TypeName="DataEntities.CartItemItem" StoreEntitySet="CartItems">
+      <EndProperty Name="Item">
+        <ScalarProperty Name="Id" ColumnName="Item_Id" />
+      </EndProperty>
+      <EndProperty Name="CartItem">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="DataEntities" >
+        <EntityTypeShape EntityType="DataEntities.Cart" Width="1.5" PointX="3.5" PointY="1.125" Height="1.4033821614583331" />
+        <EntityTypeShape EntityType="DataEntities.Item" Width="1.5" PointX="7.875" PointY="4.375" Height="1.9802864583333326" />
+        <EntityTypeShape EntityType="DataEntities.Discount" Width="1.5" PointX="10.5" PointY="4.375" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="DataEntities.CartItem" Width="1.5" PointX="6" PointY="1.5" Height="1.9802864583333331" />
+        <AssociationConnector Association="DataEntities.CartCartItem">
+          <ConnectorPoint PointX="5" PointY="2.110341796875" />
+          <ConnectorPoint PointX="6" PointY="2.110341796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataEntities.CartItemItem">
+          <ConnectorPoint PointX="6.75" PointY="3.4802864583333331" />
+          <ConnectorPoint PointX="6.75" PointY="5.2689925130208337" />
+          <ConnectorPoint PointX="7.875" PointY="5.2689925130208337" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataEntities.ItemDiscount">
+          <ConnectorPoint PointX="9.375" PointY="5.3651432291666659" />
+          <ConnectorPoint PointX="10.5" PointY="5.3651432291666659" />
+        </AssociationConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
