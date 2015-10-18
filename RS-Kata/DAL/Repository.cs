@@ -15,7 +15,7 @@ namespace RS_Kata.DAL
 		public Item GetItemBySKU(char sku)
 		{
 			string skuStr = sku.ToString();
-			return context.Items.Where(i => i.SKU == skuStr).First();
+			return context.Items.Where(i => i.SKU == skuStr).FirstOrDefault();
 		}
 
 	}

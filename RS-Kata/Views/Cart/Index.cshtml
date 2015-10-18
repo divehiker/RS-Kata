@@ -1,5 +1,29 @@
-﻿@{
+﻿@model RS_Kata.Models.CartViewModel
+
+@{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Cart</h2>
+<table>
+	<tr>
+		<th>SKU</th>
+		<th>Qty</th>
+		<th>Price</th>
+	</tr>
+	@foreach (RS_Kata.Models.CartItemViewModel item in Model.CartItems)
+{
+	<tr>
+		<td>@item.SKU</td>
+		<td>@item.Qty</td>
+		<td>@item.Price</td>
+	</tr>
+}
+	<tr>
+		<td colspan="2">Total</td>
+		<td>@Html.DisplayFor(m => m.Total)</td>
+	</tr>
+</table>
+
+<br />
+@Html.ActionLink("New Scan", "Index", "Home")

@@ -1,3 +1,10 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<h2>Enter Scan Items (A-D)</h2>
+@using (Html.BeginForm("Scan", "Cart", FormMethod.Get))
+{
+	
+	@Html.Editor("Items")
+	<input type="submit" name="btnSubmit" value="Scan" />
+}

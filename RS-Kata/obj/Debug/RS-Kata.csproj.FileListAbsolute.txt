@@ -1,4 +1,3 @@
-C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\obj\Debug\ResolveAssemblyReference.cache
 C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\bin\RS-Kata.dll
 C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\bin\RS-Kata.pdb
 C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\bin\Antlr3.Runtime.dll
@@ -49,5 +48,6 @@ C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\bin\DotNetOpenAuth.OAuth.Con
 C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\bin\DotNetOpenAuth.OAuth.xml
 C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\bin\DotNetOpenAuth.OpenId.xml
 C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\obj\Debug\ResolveAssemblyReference.cache
 C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\obj\Debug\RS-Kata.dll
 C:\Visual Studio 2010\Projects\Misc\RS-Kata\RS-Kata\obj\Debug\RS-Kata.pdb

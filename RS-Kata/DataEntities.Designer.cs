@@ -304,9 +304,15 @@ namespace RS_Kata
     [DataContractAttribute(IsReference=true)]
     public partial class CartItem : EntityObject
     {
-
+		//calculates the price of all the items including discounts. Discounts are only given for exact quantity groupings.
 		public double GetExtendedPrice()
 		{
+			//if the item wasn't found, we will return a zero
+			if (Item == null)
+			{
+				return 0;
+			}
+
 			if (Item.Discounts.Count > 0)
 			{
 				Discount discount = Item.Discounts.FirstOrDefault();
